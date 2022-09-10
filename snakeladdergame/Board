@@ -1,0 +1,67 @@
+import java.util.concurrent.ThreadLocalRandom;
+
+public class Board {
+
+  Cell[][] cells;
+
+  public Board(int boardSize, int numberOfSnakes, int numberOfLadders) {
+    initializeBoard(boardSize);
+    addSnakesAndLadders(numberOfSnakes, numberOfLadders);
+  }
+
+  private void initializeBoard(int boardSize) {
+    cells = new Cell[boardSize][boardSize];
+
+    for(int i = 0; i < boardSize; i++) {
+      for(int j = 0; j < boardSize; j++) {
+          cells[i][j] = new Cell();
+      }
+    }
+  }
+
+  private void addSnakesAndLadders(int numberOfSnakes, int numberOfLadders) {
+
+    int n = cells.length;
+
+    while(numberOfSnakes > 0) {
+      int start = ThreadLocalRandom.current().nextInt(1, n * n + 1);
+      int end = ThreadLocalRandom.current().nextInt(1, n * n + 1);
+
+      if(start >= end) {
+          continue;
+      }
+
+      Jump jump = new Jump();
+      jump.start = start;
+      jump.end = end;
+
+      Cell cell = getCell(jump.start);
+      cell.jump = jump;
+      numberOfSnakes--;
+    }
+
+    while(numberOfLadders > 0) {
+      int start = ThreadLocalRandom.current().nextInt(1, n * n + 1);
+      int end = ThreadLocalRandom.current().nextInt(1, n * n + 1);
+
+      if(start >= end) {
+          continue;
+      }
+
+      Jump jump = new Jump();
+      jump.start = start;
+      jump.end = end;
+
+      Cell cell = getCell(jump.start);
+      cell.jump = jump;
+      numberOfLadders--;
+    }
+  }
+
+  Cell getCell(int position) {
+    int x = position / cells.length;
+    int y = position / cells.length;
+
+    return cells[x][y];
+  }
+}

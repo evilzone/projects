@@ -1,0 +1,13 @@
+LLD Tic-tac-toe
+---------------
+
+P1 - X
+P2 - O
+
+Board
+
+Objects
+- piece {X, O, $, #}
+- code should be extensible
+- board (n * n)
+- player

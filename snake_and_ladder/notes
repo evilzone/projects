@@ -1,0 +1,13 @@
+Rough flow:
+
+
+Requirement clarification                       |                   Object identification
+
+                                                                    - dice
+How many dice? 1 (should be scalable)                               - snake, ladder
+                                                                    - board
+How many snakes and ladder? m, n                                    - players
+    - setup time, we should be able to dynamically define           - cells
+
+- winning condition?
+    - anyone wins, game finished

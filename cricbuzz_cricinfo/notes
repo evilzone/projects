@@ -1,0 +1,141 @@
+Requirement gathering:
+
+- match 1
+- match 2
+- match 3
+
+....
+- match N
+
+---> scorecard
+
+- flow:
+
+
+                        -> Inning1  -> 50      team A   Bat     ->  Player  ->  score data
+    2 teams ->    Match                        team B   Bowl
+
+                        -> Inning2  -> 50      team A   Bat    ->  Player   -> score data
+                                               team B   Bowl
+
+- object identification:
+    - Match
+    - Team
+    - Player
+    - Inning
+    - over
+    - bowl
+    - scorecard
+
+
+- relationship (UML)
+
+<< interface >>
+    scorecard updater
+        - BattingSCUpdater
+            - update()
+        - BallingSCUpdater
+
+
+Match
+    - team A
+    - team B
+    - Date date
+    - String venue
+    - Inning[] innings
+    - MatchType type
+    - Team tossWinner
+
+    - startMatch()
+
+Team
+    - Stirng teamName
+    - Queue<Player> p11
+    - List<Player> bench
+    - PlayerBattingController pbc1
+    - PlayerBowlingController pbc2
+
+Player
+    - Person person
+    - PlayerType type
+    - BattingScoreCard battingsc
+    - BowlingScoreCard bowlingsc
+
+Person
+    - String name
+    - int age
+    - Address address
+
+enum PlayerType
+    - bowler
+    - batsman
+    - wicketkeeper
+    - allrounder
+    - caption
+
+
+BattingScoreCard
+    - int totalRun
+    - int totalBallsPlayed
+    - int total4s
+    - int total6s
+    - int strikerRate
+
+BallingScoreCard
+    - int totalOversDelivered
+    - int runsGiven
+    - int wicketsTaken
+    - int noBallCount
+    - int whiteBallCount
+    - double economyRate
+
+PlayerBattingController
+    - Queue<Player> yetToPlay
+    - Player striker
+    - Player nonStriker
+
+PlayerBallingController
+    - Deque<Player> bowlers
+    - Map<Player, int> bowlerVsOverCount
+    - Player CurrentBowler
+
+MatchType << interface >>
+    - noOfOvers
+    - maxOverBallerAllowed
+
+- Oneday MT
+- T20 MT
+
+Innings
+    - Team batting
+    - Team balling
+    - List<Over> overs
+
+    - startInning()
+
+OverDetails
+    - int OverNumber
+    - List<Ball> balls
+
+    - startOver()
+
+Ball
+    - int ballNumber
+    - BallType balltype
+    - Player playedBy
+    - Player bowledBy
+    - List<ScoreUpdaterObserver>
+    - startBallDelivery()
+    - notify()
+
+enum BallType
+    - NORMAL
+    - NO_BALL
+    - WIDE_BALL
+
+enum RunType
+    - ONE
+    - TWO
+    - FOUR
+    - SIX
+    - WIDE_RUN
